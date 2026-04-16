@@ -1,12 +1,13 @@
+#pragma once
 #include <vector>
 #include "course.h"
 using namespace std;
 
 class Schedule {
-    vector<Course> courses;
+    vector<CourseWithSelectedTime> courses;
 public:
-    Schedule(vector<Course> courses);
+    Schedule(vector<CourseWithSelectedTime> courses);
 
-    vector<Course> getCourses();
-    int getCreditHours();
+    const vector<CourseWithSelectedTime>& getCourses() const;
+    int getCreditHours() const;
 };
