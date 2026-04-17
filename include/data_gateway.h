@@ -12,9 +12,9 @@ public:
     ~DataGateway();
 
     vector<Course> getAllCourses();
-    Course getCourse(string courseId);
+    Course getCourse(const string& courseId);
     void setCourse(const Course& course);
-    void deleteCourse(string courseId);
+    void deleteCourse(const string& courseId);
 
     vector<Student> getAllStudents();
     Student getStudent(int studentId);
@@ -23,4 +23,9 @@ public:
 
 private:
     void ensure_tables_exist();
+};
+
+class DataNotFoundException {
+public:
+    DataNotFoundException() {}
 };

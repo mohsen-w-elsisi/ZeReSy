@@ -19,6 +19,7 @@ duration(duration),
 isElective(isElective) {
 }
 
+string Course::getId() const { return id; }
 string Course::getName() const { return name; }
 int Course::getCreditHours() const { return creditHours; }
 string Course::getInstructorName() const { return instructorName; }

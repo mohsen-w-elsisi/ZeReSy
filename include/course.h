@@ -25,6 +25,7 @@ public:
         bool isElective
     );
 
+    string getId() const;
     string getName() const;
     int getCreditHours() const;
     string getInstructorName() const;

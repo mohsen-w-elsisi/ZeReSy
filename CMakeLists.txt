@@ -29,6 +29,7 @@ enable_testing()
 set(tests
     schedule_credit_hours
     data_gateway
+    data_gateway_courses
 )
 
 foreach(test ${tests})
