@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <sqlite3.h>
 #include "course.h"
@@ -5,7 +6,7 @@
 using namespace std;
 
 class DataGateway {
-    sqlite3* db_connection;
+    sqlite3* db;
 
 public:
     DataGateway(const string& dbPath);

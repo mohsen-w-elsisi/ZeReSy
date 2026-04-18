@@ -13,6 +13,7 @@ add_executable(main main.cpp)
 target_include_directories(main PRIVATE include)
 
 set(src_files
+    lib/student.cpp
     lib/course.cpp
     lib/schedule.cpp
     lib/data_gateway/data_gateway.cpp
@@ -30,6 +31,7 @@ set(tests
     schedule_credit_hours
     data_gateway
     data_gateway_courses
+    data_gateway_students
 )
 
 foreach(test ${tests})

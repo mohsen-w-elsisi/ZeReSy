@@ -5,10 +5,12 @@
 using namespace std;
 
 void initCourses(sqlite3* db);
+void initStudents(sqlite3* db);
+
 
 void ensureTablesInitalised(sqlite3* db) {
     initCourses(db);
-    // initStudents();
+    initStudents(db);
 }
 
 void initCourses(sqlite3* db) {
@@ -21,7 +23,20 @@ void initCourses(sqlite3* db) {
         nullptr
     );
     int resStatus = sqlite3_step(statement);
+    if (resStatus != SQLITE_DONE) throw exception();
     sqlite3_finalize(statement);
 }
 
-// void initStudents() {}
+void initStudents(sqlite3* db) {
+    sqlite3_stmt* statement;
+    sqlite3_prepare_v2(
+        db,
+        studentTableCreationStatement.c_str(),
+        studentTableCreationStatement.size(),
+        &statement,
+        nullptr
+    );
+    int resStatus = sqlite3_step(statement);
+    if (resStatus != SQLITE_DONE) throw exception();
+    sqlite3_finalize(statement);
+}
