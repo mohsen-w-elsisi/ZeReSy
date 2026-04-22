@@ -9,7 +9,7 @@ int main(){
         "Introduction to Computer Science",
         3,
         "Dr. Smith",
-        {9, 11, 14},
+        { {SUN, 9}, {MON, 11}, {TUE, 14} },
         90,
         false
     );

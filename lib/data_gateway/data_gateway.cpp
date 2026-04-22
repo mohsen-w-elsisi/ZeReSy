@@ -44,7 +44,7 @@ Course parseCourseFromSqliteRow(sqlite3_stmt* stmt) {
         readTextCol(stmt, 1),
         sqlite3_column_int(stmt, 2),
         readTextCol(stmt, 3),
-        { 0 }, // TODO: available times
+        {}, // TODO: available times
         sqlite3_column_int(stmt, 5),
         sqlite3_column_int(stmt, 6) == 1
     );

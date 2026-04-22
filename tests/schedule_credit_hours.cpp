@@ -9,7 +9,7 @@ int main() {
         "Introduction to Computer Science And AI",
         3,
         "Dr. Smith",
-        {9, 11, 14},
+        { {SUN, 9}, {MON, 11}, {TUE, 14} },
         90,
         false
     );
@@ -18,13 +18,13 @@ int main() {
         "Calculus I",
         2,
         "Dr. Johnson",
-        {10, 12, 15},
+        { {SUN, 10}, {WED, 12}, {THU, 15} },
         90,
         false
     );
 
-    CourseWithSelectedTime cwt1 = course1.selectTime(9);
-    CourseWithSelectedTime cwt2 = course2.selectTime(10);
+    CourseWithSelectedTime cwt1 = course1.selectTime({SUN, 9});
+    CourseWithSelectedTime cwt2 = course2.selectTime({SUN, 10});
 
     Schedule schedule({cwt1, cwt2});
     

@@ -4,9 +4,9 @@ using namespace std;
 
 const char TEST_DB_NAME[] = "data_gateway_courses_test.db";
 
-const Course MOCK_COURSE1("CSAI 100", "Intro to CSAI", 1, "Dr. Khaled", { 123, 456 }, 60, false);
-const Course MOCK_COURSE2("CSAI 101", "Intro to Python", 3, "Dr. Mohamed", { 123, 456 }, 120, false);
-const Course MOCK_COURSE3("CSAI 100", "Intro to CSAI", 1, "Dr. Doaa", { 123, 456 }, 60, false);
+const Course MOCK_COURSE1("CSAI 100", "Intro to CSAI", 1, "Dr. Khaled", { {SUN, 9}, {MON, 11} }, 60, false);
+const Course MOCK_COURSE2("CSAI 101", "Intro to Python", 3, "Dr. Mohamed", { {TUE, 10}, {WED, 12} }, 120, false);
+const Course MOCK_COURSE3("CSAI 100", "Intro to CSAI", 1, "Dr. Doaa", { {SUN, 9}, {MON, 11} }, 60, false);
 
 int main() {
     // Setup
