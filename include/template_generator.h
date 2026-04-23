@@ -4,10 +4,11 @@
 using namespace std;
 
 class TemplateGenerator {
-    vector<Course> courses;
+    vector<CourseWithSelectedTime> courses;
 
 public:
-    TemplateGenerator(vector<Course> courses) : courses(courses) {}
+    TemplateGenerator(vector<CourseWithSelectedTime> courses) : courses(courses) {}
 
     vector<Schedule> generateTemplates();
+    vector <vector<int>> permutationManager();
 };

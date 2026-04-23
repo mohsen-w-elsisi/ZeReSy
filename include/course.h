@@ -9,7 +9,7 @@ enum Day { SUN, MON, TUE, WED, THU, };
 
 struct CourseTime {
     const Day day;
-    const int startTime;
+    const int startTime; //24-hour format (from 8 to 16)
 };
 
 class Course {
