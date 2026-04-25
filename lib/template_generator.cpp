@@ -1,3 +1,4 @@
+// permutation generator
 #include "template_generator.h"
 #include <vector>
 
