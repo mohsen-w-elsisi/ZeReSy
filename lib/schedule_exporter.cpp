@@ -74,7 +74,7 @@ void SchedualExporter::addScheduleSlots() {
             CourseWithSelectedTime* course = scheduleGrid[day][hour];
             if (course == nullptr) continue;
             for (int column = day * PIXELS_PER_COLUMN; column < (day + 1) * PIXELS_PER_COLUMN; column++) {
-                for (int row = hour * PIXELS_PER_ROW; row < (hour + 1) * PIXELS_PER_ROW; row++) {
+                for (int row = hour * PIXELS_PER_ROW; row < (hour + course->getDuration() / 60) * PIXELS_PER_ROW; row++) {
                     pixels[row][column * 3] = 0;
                     pixels[row][column * 3 + 1] = 255;
                     pixels[row][column * 3 + 2] = 0;
