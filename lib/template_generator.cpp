@@ -1,22 +1,5 @@
-#include "/Users/youssof/Desktop/ZeReSy/include/template_generator.h"
-#include <iostream>
-#include <string>
+#include "template_generator.h"
 #include <vector>
-#include <array>
-#include <algorithm>
-
-using namespace std;
-
-vector<Schedule> TemplateGenerator::generateTemplates() {
-    vector<Schedule> generatedSchedules;
-    array<array<string,8>,5> schedule;
-    
-    for (auto& row : schedule) {
-        row.fill("[]");
-    }
-    
-    return generatedSchedules;
-}
 
 vector<vector<int>> TemplateGenerator::permutationManager() {
     vector<int> permutation;
@@ -76,16 +59,14 @@ void TemplateGenerator::permutationRecursive(int num, const vector <int> &perms,
 }
 vector <vector<int>> TemplateGenerator::conflictResolver(){
     vector <vector<int>> noConflictPermutations = permutationManager();
-    for(int i = 0; i < noConflictPermutations.size(); i++){
+    for(size_t i = 0; i < noConflictPermutations.size(); i++){
         bool check = false;
-        for (int j = 0; j < noConflictPermutations[i].size() - 1; j++){
-            if (check == true) {break;}
-            for (int k = j+1; k < noConflictPermutations[i].size(); k++){
-                int firstTime = courses[j].getAvailableTimes()[noConflictPermutations[i][j]].startTime;
-                int secondTime = courses[k].getAvailableTimes()[noConflictPermutations[i][k]].startTime;
-                int firstDay = courses[j].getAvailableTimes()[noConflictPermutations[i][j]].day;
-                int secondDay = courses[k].getAvailableTimes()[noConflictPermutations[i][k]].day;
-                if (firstDay == secondDay && abs(secondTime - firstTime) < courses[j].getDuration()){
+        for (size_t j = 0; j < noConflictPermutations[i].size() - 1; j++){
+            if (check) {break;}
+            for (size_t k = j+1; k < noConflictPermutations[i].size(); k++){
+                const auto& firstCourse = courses[j].getAvailableTimes()[noConflictPermutations[i][j]];
+                const auto& secondCourse = courses[k].getAvailableTimes()[noConflictPermutations[i][k]];
+                if (firstCourse.day == secondCourse.day && abs(secondCourse.startTime - firstCourse.startTime) < courses[j].getDuration()){
                     swap(noConflictPermutations[i], noConflictPermutations.back());
                     noConflictPermutations.pop_back();
                     i--;

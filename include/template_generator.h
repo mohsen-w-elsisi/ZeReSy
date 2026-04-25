@@ -4,12 +4,11 @@
 using namespace std;
 
 class TemplateGenerator {
-    vector<CourseWithSelectedTime> courses;
+    vector<Course> courses;
 
 public:
-    TemplateGenerator(vector<CourseWithSelectedTime> courses) : courses(courses) {}
+    TemplateGenerator(vector<Course> courses) : courses(courses) {}
 
-    vector<Schedule> generateTemplates();
     vector <vector<int>> permutationManager();
     void permutationRecursive(int num, const vector <int> &perms, vector <int> &permu, vector <vector<int>> &final_permutations);
     vector <vector<int>> conflictResolver();
