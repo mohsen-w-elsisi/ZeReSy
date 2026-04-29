@@ -1,17 +1,19 @@
 #include <iostream>
-#include "course.h"
+#include <string>
+#include "login_ui.h"
 using namespace std;
 
-int main(){
-    std::cout << "Hello, from ZeReSy!\n";
-    Course course(
-        "CS101",
-        "Introduction to Computer Science",
-        3,
-        "Dr. Smith",
-        { {SUN, 9}, {MON, 11}, {TUE, 14} },
-        90,
-        false
-    );
-    std::cout << "Course Name: " << course.getName() << "\n";
+int main() {    
+    LoginUI login;
+
+    string id, password;
+    
+    cout << "enter iD: ";
+    cin >> id;
+    cout << "enter pass: ";
+    cin >> password;
+
+    login.setId(id);
+    login.setPass(password);
+    login.launchauthenticatedsession();
 }

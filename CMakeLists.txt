@@ -13,7 +13,6 @@ function(add_external_libraries target)
 endfunction()
 
 
-
 # ============ Main Executable ============
 
 add_executable(main main.cpp)
@@ -42,7 +41,6 @@ set(tests
     data_gateway
     data_gateway_courses
     data_gateway_students
-    Login_ui
 )
 
 foreach(test ${tests})
@@ -52,5 +50,3 @@ foreach(test ${tests})
     add_external_libraries(${test}_test)
     add_test(NAME ${test}_test COMMAND ${test}_test)
 endforeach()
-
-# be kol nashaat! 

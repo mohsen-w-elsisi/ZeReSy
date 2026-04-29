@@ -8,11 +8,9 @@ using namespace std;
 LoginUI::LoginUI()
 {
     // dict
-    maps["s001"] = "pass123";
-    maps["s002"] = "hello99";
-    maps["a001"] = "admin@1";
-    idinput = "";
-    passwordInput = "";
+    maps["s001"] = "123";
+    maps["s002"] = "4499";
+    maps["a001"] = "007";
 }
 
 // setters
