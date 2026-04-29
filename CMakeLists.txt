@@ -25,6 +25,7 @@ set(src_files
     lib/schedule.cpp
     lib/schedule_exporter.cpp
     lib/data_gateway/data_gateway.cpp
+    lib/LoginUI.cpp
 )
 target_sources(main PRIVATE ${src_files})
 
@@ -41,6 +42,7 @@ set(tests
     data_gateway
     data_gateway_courses
     data_gateway_students
+    Login_ui
 )
 
 foreach(test ${tests})
