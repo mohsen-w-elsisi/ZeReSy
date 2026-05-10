@@ -22,7 +22,7 @@ set(src_files
     lib/student.cpp
     lib/course.cpp
     lib/schedule.cpp
-    lib/schedule_exporter.cpp
+    lib/schedule_exporter/schedule_exporter.cpp
     lib/data_gateway/data_gateway.cpp
     lib/LoginUI.cpp
 )
@@ -37,6 +37,7 @@ enable_testing()
 
 set(tests
     schedule_credit_hours
+    png
     schedule_exporter
     data_gateway
     data_gateway_courses

@@ -3,7 +3,7 @@
 #include "schedule.h"
 
 #define DAYS_COUNT 5
-#define HOURS_COUNT 12
+#define HOURS_COUNT 8
 
 #define PIXELS_PER_ROW 50
 #define PIXELS_PER_COLUMN 100
@@ -13,26 +13,36 @@
 
 #define BYTES_PER_ROW (IMAGE_WIDTH*3)
 
+class PNG {
+    png_struct* pngStr;
+    png_info* pngInfo;
+    png_byte** pixels;
+
+    int width, height;
+
+public:
+
+    PNG(int height, int width);
+    ~PNG();
+
+    void setPixel(int x, int y, int r, int g, int b);
+    void fill(int r, int g, int b);
+    void write(string filename);
+};
+
+
 class SchedualExporter {
     vector<CourseWithSelectedTime >courses;
     CourseWithSelectedTime* scheduleGrid[DAYS_COUNT][HOURS_COUNT]; // columns first then rows 
-
-    png_struct* pngStr;
-    png_info* pngInfo;
-    FILE* pngFile;
-    png_byte* pixels[IMAGE_HEIGHT];
+    PNG png;
+    string filename;
 
 public:
     SchedualExporter(Schedule schedule, const string& filename);
-    ~SchedualExporter();
     void exportPNG();
 
 private:
-    void initScheduleGrid();
-    void initPNGData();
-    void initFileIO(const string& filename);
-    void initPixels();
-
     void addScheduleSlots();
     void addLayout();
 };
+

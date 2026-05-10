@@ -39,6 +39,16 @@ CourseWithSelectedTime Course::selectTime(CourseTime time) const {
 
 CourseWithSelectedTime::CourseWithSelectedTime(Course course, CourseTime time) :
     Course(course), selectedTime(time) {
+    bool isValid = false;
+
+    for (const auto& availableTime : getAvailableTimes()) {
+        if (availableTime.day == selectedTime.day && availableTime.startTime == selectedTime.startTime) {
+            isValid = true;
+            break;
+        }
+    }
+
+    if (!isValid) throw exception();
 }
 
 CourseTime CourseWithSelectedTime::getSelectedTime() const { return selectedTime; }
