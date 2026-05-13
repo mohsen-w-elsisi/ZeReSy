@@ -6,11 +6,18 @@ project(ZeReSy VERSION 10.44.007 LANGUAGES C CXX)
 
 find_package(SQLite3 REQUIRED)
 find_package(PNG REQUIRED)
+find_package(Freetype REQUIRED)
 
 function(add_external_libraries target)
     target_link_libraries(${target} PRIVATE SQLite::SQLite3)    
     target_link_libraries(${target} PRIVATE PNG::PNG)    
+    target_link_libraries(${target} PRIVATE Freetype::Freetype)
 endfunction()
+
+
+# ============ Static Assets ==============
+
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 
 # ============ Main Executable ============
