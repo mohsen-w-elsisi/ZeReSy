@@ -49,6 +49,7 @@ set(tests
     data_gateway
     data_gateway_courses
     data_gateway_students
+    data_gateway_admins
 )
 
 foreach(test ${tests})

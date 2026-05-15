@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <functional>
 #include <vector>
@@ -60,4 +61,6 @@ vector<T> getManyValsFromSql(sqlite3* db, string query, function<T(sqlite3_stmt*
 
     return results;
 }
+
+
 
