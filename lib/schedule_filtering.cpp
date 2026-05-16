@@ -140,6 +140,7 @@
     }
 
     const vector <Schedule>& ScheduleFiltering::getFinalSchedules(const vector <Course>& courses){
+        if (courses.empty()) {return;}
         schedulesToObjects(courses);
         return finalSchedules;
     }
