@@ -7,6 +7,8 @@ using namespace std;
 
 // ============= General ===================
 
+DataGateway* DataGateway::i = nullptr;
+
 DataGateway::DataGateway(const string& dbPath) {
     sqlite3_open(dbPath.c_str(), &db);
     execSqlCommand(db, studentQueries::tableCreation);

@@ -7,6 +7,10 @@
 using namespace std;
 
 class DataGateway {
+public:
+    static DataGateway* i;
+
+private:
     sqlite3* db;
 
 public:
@@ -31,6 +35,7 @@ public:
 private:
     void ensure_tables_exist();
 };
+
 
 class DataNotFoundException : public exception {
 public:
