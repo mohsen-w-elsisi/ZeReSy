@@ -1,6 +1,8 @@
 // permutation generator
-#include "template_generator.h"
+#include "permutations_generator.h"
 #include <vector>
+
+vector <Course> TemplateGenerator::getCourses() {return courses;}
 
 vector<vector<int>> TemplateGenerator::permutationManager() {
     vector<int> permutation;
@@ -67,7 +69,7 @@ vector <vector<int>> TemplateGenerator::conflictResolver(){
             for (size_t k = j+1; k < noConflictPermutations[i].size(); k++){
                 const auto& firstCourse = courses[j].getAvailableTimes()[noConflictPermutations[i][j]];
                 const auto& secondCourse = courses[k].getAvailableTimes()[noConflictPermutations[i][k]];
-                if (firstCourse.day == secondCourse.day && abs(secondCourse.startTime - firstCourse.startTime) < courses[j].getDuration()){
+                if (firstCourse.day == secondCourse.day && max(secondCourse.startTime, firstCourse.startTime) < min((firstCourse.startTime + courses[j].getDuration()), (secondCourse.startTime + courses[k].getDuration()))){
                     swap(noConflictPermutations[i], noConflictPermutations.back());
                     noConflictPermutations.pop_back();
                     i--;
