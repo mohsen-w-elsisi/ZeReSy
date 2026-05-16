@@ -27,4 +27,7 @@ int Student::getRegisteredCreditHours()  const {
     return schedule.getCreditHours();
 }
 
+void Student::setSchedule(const Schedule& schedule) { this->schedule = schedule; }
+
+
 // TODO: missing elective picker

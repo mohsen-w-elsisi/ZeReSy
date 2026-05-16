@@ -8,8 +8,8 @@ class CourseWithSelectedTime; // Forward declaration for Course::selectTime retu
 enum Day { SUN, MON, TUE, WED, THU, };
 
 struct CourseTime {
-    const Day day;
-    const int startTime; //24-hour format (from 8 to 16)
+    Day day;
+    int startTime; //24-hour format (from 8 to 16)
 };
 
 class Course {
@@ -40,6 +40,7 @@ public:
     int getDuration() const;
     vector<const Course*> getPrerequisites() const;
     bool getIsElective() const;
+
     CourseWithSelectedTime selectTime(CourseTime time) const;
 };
 
@@ -48,5 +49,6 @@ class CourseWithSelectedTime : public Course {
 public:
     CourseWithSelectedTime(Course course, CourseTime time);
     CourseTime getSelectedTime() const;
+    bool conflictsWith(const CourseWithSelectedTime& other) const;
 };
  

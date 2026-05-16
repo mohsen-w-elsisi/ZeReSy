@@ -10,4 +10,11 @@ public:
 
     const vector<CourseWithSelectedTime>& getCourses() const;
     int getCreditHours() const;
+    bool conflictsWith(const CourseWithSelectedTime& course) const;
+    void addCourse(const CourseWithSelectedTime& course);
+};
+
+class SchedulingConflictException : exception {
+public:
+    const char* what() const noexcept override;
 };

@@ -29,5 +29,7 @@ public:
     int getRegisteredCreditHours() const;
     string getPassword() const;
 
+    void setSchedule(const Schedule& schedule);
+    
     void pickElective(Course elective);
 };
