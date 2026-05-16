@@ -18,6 +18,77 @@ string tableExistanceQuery(string tableName) {
 }
 
 
+string encodeAvailableTime(CourseTime time) {
+    string dayInidacter = to_string(time.day);
+    string timeIndicaor = time.startTime >= 10
+        ? to_string(time.startTime)
+        : "0" + to_string(time.startTime);
+    return dayInidacter + timeIndicaor;
+}
+
+CourseTime decodeAvailableTime(string encodedTime) {
+    Day day = (Day)stoi(encodedTime.substr(0, 1));
+    int time = stoi(encodedTime.substr(1, 2));
+    return { day, time };
+}
+
+string encodeAvailableTimes(vector<CourseTime> times) {
+    string buffer;
+    for (const auto& time : times) buffer += encodeAvailableTime(time);
+    return buffer;
+}
+
+vector<CourseTime> decodeAvailableTimes(string encodedTimes) {
+    vector<CourseTime> times;
+    for (int i = 0; i < encodedTimes.size() / 3; i += 3) times.push_back(
+        decodeAvailableTime(encodedTimes.substr(i, 3))
+    );
+    return times;
+}
+
+string encodeSchedule(const Schedule& schedule) {
+    string buffer;
+    for (const auto& course : schedule.getCourses()) {
+        buffer += course.getId() + encodeAvailableTime(course.getSelectedTime()) + ";";
+    }
+    return buffer;
+}
+
+Schedule decodeSchedule(const string& encodedSchedule, const vector<Course>& allCourses) {
+    vector<CourseWithSelectedTime> courses;
+    vector<string> courseEntries;
+
+    string currentEntry;
+    for (const char c : encodedSchedule) {
+        if (c == ';') {
+            courseEntries.push_back(currentEntry);
+            currentEntry.clear();
+        } else {
+            currentEntry += c;
+        }
+    }
+    
+    for (const auto& entry : courseEntries) {
+        string courseId = entry.substr(0, entry.size() - 3);
+        string timePart = entry.substr(entry.size() - 3);
+        CourseTime selectedTime = decodeAvailableTime(timePart);
+        
+        Course course("", "", 0, "", {}, 0, false);
+        for (const auto& testCourse : allCourses) {
+            if (testCourse.getId() == courseId) {
+                course = testCourse;
+                break;
+            }
+        }
+        if (course.getId().empty()) continue; // course not found, skip
+
+        courses.push_back(course.selectTime(selectedTime));
+    }
+
+    return Schedule(courses);
+}
+
+
 namespace courseQueries {
     const string tableCreation =
         "CREATE TABLE IF NOT EXISTS courses ("
@@ -38,28 +109,6 @@ namespace courseQueries {
         return "SELECT id, name, credit_hours, instructor_name, "
             "available_times, duration, is_elective FROM courses"
             " WHERE id='" + courseId + "';";
-    }
-
-    string encodeAvailableTimes(vector<CourseTime> times) {
-        string buffer;
-        for (const auto& time : times) {
-            string dayInidacter = to_string(time.day);
-            string timeIndicaor = time.startTime >= 10
-                ? to_string(time.startTime)
-                : "0" + to_string(time.startTime);
-            buffer += dayInidacter + timeIndicaor + ",";
-        }
-        return buffer;
-    }
-
-    vector<CourseTime> decodeAvailableTimes(string encodedTimes) {
-        vector<CourseTime> times;
-        for (int i = 0; i < encodedTimes.size() / 4; i += 4) {
-            Day day = (Day)stoi(encodedTimes.substr(i, 1));
-            int time = stoi(encodedTimes.substr(i + 1, 2));
-            times.push_back({ day, time });
-        }
-        return times;
     }
 
     string set(const Course& course) {
@@ -118,7 +167,7 @@ namespace studentQueries {
             "'" + student.getName() + "'," +
             to_string(student.getGPA()) + ","
             "''," +
-            "''," +
+            "'" + encodeSchedule(student.getSchedule()) + "'," +
             "'" + student.getPassword() + "'"
             ");";
     }
@@ -127,13 +176,13 @@ namespace studentQueries {
         return "DELETE FROM students WHERE id=" + to_string(studentId) + ";";
     }
 
-    Student parseFrom(sqlite3_stmt* stmt) {
+    Student parseFrom(sqlite3_stmt* stmt, const vector<Course>& allCourses) {
         return Student(
             sqlite3_column_int(stmt, 0),
             readTextCol(stmt, 1),
             sqlite3_column_int(stmt, 2),
             {},
-            Schedule({}),
+            decodeSchedule(readTextCol(stmt, 4), allCourses),
             readTextCol(stmt, 5)
         );
     }

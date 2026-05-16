@@ -33,6 +33,10 @@ set(src_files
     lib/data_gateway/data_gateway.cpp
     lib/LoginUI.cpp
     lib/elective_picker.cpp
+    lib/admin_ui.cpp
+    lib/student_ui.cpp
+    lib/application_manager/application_manager.cpp
+    lib/authenticator.cpp
 )
 target_sources(main PRIVATE ${src_files})
 

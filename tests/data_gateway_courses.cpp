@@ -6,7 +6,7 @@ const char TEST_DB_NAME[] = "data_gateway_courses_test.db";
 
 const Course MOCK_COURSE1("CSAI 100", "Intro to CSAI", 1, "Dr. Khaled", { {SUN, 9}, {MON, 11} }, 60, false);
 const Course MOCK_COURSE2("CSAI 101", "Intro to Python", 3, "Dr. Mohamed", { {TUE, 10}, {WED, 12} }, 120, false);
-const Course MOCK_COURSE3("CSAI 100", "Intro to CSAI", 1, "Dr. Doaa", { {SUN, 9}, {MON, 11} }, 60, false);
+const Course MOCK_COURSE3("CSAI 100", "Intro to CSAI", 1, "Dr. Doaa", { {SUN, 9} }, 60, false);
 
 int main() {
     // Setup
@@ -38,6 +38,11 @@ int main() {
     testCourse = gateway->getCourse(MOCK_COURSE1.getId());
     assert(testCourse.getInstructorName() == "Dr. Doaa");
 
+    // Testing course times are properly stored and retrieved
+    assert(testCourse.getAvailableTimes().size() == 1);
+    assert(testCourse.getAvailableTimes()[0].day == SUN);
+    assert(testCourse.getAvailableTimes()[0].startTime == 9);
+    
     // Clean up
     delete gateway;
     remove(TEST_DB_NAME);
