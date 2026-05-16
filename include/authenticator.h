@@ -1,17 +1,15 @@
+#ifndef AUTHENTICATOR_H
+#define AUTHENTICATOR_H
+
 #include <string>
+
 using namespace std;
 
-enum UserType {
-    Student,
-    Instructor,
-};
-
 class Authenticator {
-    string username, password;
-    int id;
 public:
-    Authenticator(string s, string p);
-    Authenticator(int i, string p);
-
-    bool login();
+    bool login(string id, string pass);
+    bool isAdmin(string id);
+    bool isStudent(string id);
 };
+
+#endif

@@ -1,20 +1,17 @@
+#ifndef LOGIN_UI_H
+#define LOGIN_UI_H
+
 #include <string>
-#include <map>
+#include "authenticator.h"
 
 using namespace std;
 
 class LoginUI {
-private:
-    map<string, string> maps; //dict
-    string idinput;
-    string passwordInput;
-
 public:
-    LoginUI();
-
-    //setters
-    void setId(string id);
-    void setPass(string pass);
-
-    void launchauthenticatedsession();
+    string getId();
+    string getPass();
+    void invalidId();
+    void invalidPassword();
 };
+
+#endif
