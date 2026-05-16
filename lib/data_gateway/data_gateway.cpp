@@ -55,17 +55,17 @@ void DataGateway::deleteStudent(int studentId) {
 
 Student DataGateway::getStudent(int studentId) {
     return getValFromSql<Student>(
-        db, 
-        studentQueries::getOne(studentId), 
-        studentQueries::parseFrom
+        db,
+        studentQueries::getOne(studentId),
+        [this](sqlite3_stmt* stmt) -> Student { return studentQueries::parseFrom(stmt, getAllCourses()); }
     );
 }
 
 vector<Student> DataGateway::getAllStudents() {
     return getManyValsFromSql<Student>(
-        db, 
-        studentQueries::getAll, 
-        studentQueries::parseFrom
+        db,
+        studentQueries::getAll,
+        [this](sqlite3_stmt* stmt) -> Student { return studentQueries::parseFrom(stmt, getAllCourses()); }
     );
 }
 
