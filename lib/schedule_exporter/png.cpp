@@ -37,7 +37,9 @@ PNG::~PNG() {
 }
 
 void PNG::setPixel(int x, int y, int r, int g, int b) {
-    if (x > width || y > height) throw exception();
+    if (x < 0 || y < 0 || x >= width || y >= height) {
+        throw PngPixelOutOfBoundsException(height, width, x, y);
+    }
 
     pixels[y][x * 3] = r;
     pixels[y][x * 3 + 1] = g;
@@ -58,4 +60,16 @@ void PNG::write(string filename) {
     png_init_io(pngStr, file);
     png_write_png(pngStr, pngInfo, PNG_TRANSFORM_IDENTITY, nullptr);
     fclose(file);
+}
+
+
+PngPixelOutOfBoundsException::PngPixelOutOfBoundsException(int height, int width, int  pixX, int  pixY)
+    : height(height), width(width), pixX(pixX), pixY(pixY) {
+}
+
+const char* PngPixelOutOfBoundsException::what() const noexcept {
+    return string("tried to access position (" +
+        to_string(pixX) + "," + to_string(pixY) +
+        "), which is outside an image of size " +
+        to_string(width) + "x" + to_string(height)).c_str();
 }

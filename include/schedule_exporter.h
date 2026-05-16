@@ -30,6 +30,12 @@ public:
     void write(string filename);
 };
 
+class PngPixelOutOfBoundsException : public exception {
+public:
+    int height, width, pixX, pixY;
+    PngPixelOutOfBoundsException(int height, int width, int  pixX, int  pixY);
+    const char* what() const noexcept override;
+};
 
 class SchedualExporter {
     vector<CourseWithSelectedTime >courses;

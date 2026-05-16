@@ -1,6 +1,7 @@
 #include <png.h>
 #include "schedule_exporter.h"
 #include "png.cpp"
+#include "png_text_annotater.cpp"
 using namespace std;
 
 void reportError(png_struct* pngPtr, png_const_charp msg);
@@ -37,11 +38,23 @@ void SchedualExporter::addScheduleSlots() {
             CourseWithSelectedTime* course = scheduleGrid[day][hour];
             if (course == nullptr) continue;
 
-            for (int column = day * PIXELS_PER_COLUMN; column < (day + 1) * PIXELS_PER_COLUMN; column++) {
-                for (int row = hour * PIXELS_PER_ROW; row < (hour + course->getDuration() / 60) * PIXELS_PER_ROW; row++) {
+            int startRow = hour * PIXELS_PER_ROW;
+            int endRow = (hour + course->getDuration() / 60) * PIXELS_PER_ROW;
+            int startColumn = day * PIXELS_PER_COLUMN;
+            int endColumn = (day + 1) * PIXELS_PER_COLUMN;
+
+            for (int column = startColumn; column < endColumn; column++) {
+                for (int row = startRow; row < endRow; row++) {
                     png.setPixel(column, row, 0, 255, 0);
                 }
             }
+
+            PngTextAnnotater(
+                png, 
+                course->getName(), 
+                { startColumn, startRow, endColumn - startColumn, endRow - startRow },
+                20
+            ).annotate();
         }
     }
 }

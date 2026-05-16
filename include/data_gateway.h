@@ -3,9 +3,14 @@
 #include <sqlite3.h>
 #include "course.h"
 #include "student.h"
+#include "admin.h"
 using namespace std;
 
 class DataGateway {
+public:
+    static DataGateway* i;
+
+private:
     sqlite3* db;
 
 public:
@@ -22,11 +27,17 @@ public:
     void setStudent(const Student& student);
     void deleteStudent(int studentId);
 
+    vector<Admin> getAllAdmins();
+    Admin getAdmin(const string& username);
+    void setAdmin(const Admin& admin);
+    void deleteAdmin(const string& username);
+
 private:
     void ensure_tables_exist();
 };
 
-class DataNotFoundException {
+
+class DataNotFoundException : public exception {
 public:
-    DataNotFoundException() {}
-};
+    const char* what() const noexcept override;
+};  
