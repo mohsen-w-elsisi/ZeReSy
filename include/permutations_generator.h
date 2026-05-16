@@ -4,12 +4,11 @@
 #include "schedule.h"
 using namespace std;
 
-class TemplateGenerator {
+class PermutationsGenerator {
     vector <Course> courses;
-    TemplateGenerator(vector<Course> courses) : courses(courses) {}
-    vector <vector<int>> permutationManager();
+    vector <vector<int>> permutationManager(const vector <Course>& courses);
     void permutationRecursive(int num, const vector <int> &perms, vector <int> &permu, vector <vector<int>> &final_permutations);
 public:
-    vector <Course> getCourses();
-    vector <vector<int>> conflictResolver();
+    PermutationsGenerator(vector<Course> coursess) : courses(coursess) {}
+    vector <vector<int>> conflictResolver(const vector <Course>& courses);
 };

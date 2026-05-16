@@ -2,9 +2,7 @@
 #include "permutations_generator.h"
 #include <vector>
 
-vector <Course> TemplateGenerator::getCourses() {return courses;}
-
-vector<vector<int>> TemplateGenerator::permutationManager() {
+vector<vector<int>> PermutationsGenerator::permutationManager(const vector <Course>& courses) {
     vector<int> permutation;
     vector<int> perm;
     vector<vector<int>> permutations;
@@ -50,9 +48,10 @@ vector<vector<int>> TemplateGenerator::permutationManager() {
             }
         }
     }
+    permutations.push_back(permutation);
     return permutations;
 }
-void TemplateGenerator::permutationRecursive(int num, const vector <int> &perms, vector <int> &permu, vector <vector<int>> &final_permutations){
+void PermutationsGenerator::permutationRecursive(int num, const vector <int> &perms, vector <int> &permu, vector <vector<int>> &final_permutations){
     if (num == perms.size()){final_permutations.push_back(permu); return;}
     for (int i = 0; i < perms[num]; i++){ 
         permu.push_back(i);
@@ -60,8 +59,8 @@ void TemplateGenerator::permutationRecursive(int num, const vector <int> &perms,
         permu.pop_back();
     }
 }
-vector <vector<int>> TemplateGenerator::conflictResolver(){
-    vector <vector<int>> noConflictPermutations = permutationManager();
+vector <vector<int>> PermutationsGenerator::conflictResolver(const vector <Course>& courses){
+    vector <vector<int>> noConflictPermutations = permutationManager(courses);
     for(size_t i = 0; i < noConflictPermutations.size(); i++){
         bool check = false;
         for (size_t j = 0; j < noConflictPermutations[i].size() - 1; j++){
