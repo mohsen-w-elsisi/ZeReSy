@@ -3,9 +3,8 @@
 #include "permutations_generator.h"
 using namespace std;
 
-class ScheduleLikabilityCalculator{
+class ScheduleFiltering{
 private:
-    TemplateGenerator coursesData;
     vector <vector<int>> nonScoredSchedules;
     struct scheduleScore{
         int daysOff;
@@ -24,13 +23,13 @@ private:
     static double normalizeDaysOff(double min, double max, double num);
     static double normalizeClassesPerDay(double min, double max, double num);
     static double normalizeGapHours(double min, double max, double num);
-    void scorePermutations();
+    void scorePermutations(const vector <Course>& courses);
     void normalizeValues();
     void calculateFinalSchedules();
     vector <scheduleScore> scoredSchedules;
     vector <int> finalScheduleIndexes;
     vector <Schedule> finalSchedules;
+    void schedulesToObjects(const vector <Course>& courses);
 public:
-    void schedulesToObjects();
-    const vector <Schedule>& getFinalSchedules();
+    const vector <Schedule>& getFinalSchedules(const vector <Course>& courses);
 };
