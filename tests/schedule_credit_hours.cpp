@@ -24,7 +24,7 @@ int main() {
     );
 
     CourseWithSelectedTime cwt1 = course1.selectTime({SUN, 9});
-    CourseWithSelectedTime cwt2 = course2.selectTime({SUN, 10});
+    CourseWithSelectedTime cwt2 = course2.selectTime({WED, 12});
 
     Schedule schedule({cwt1, cwt2});
     

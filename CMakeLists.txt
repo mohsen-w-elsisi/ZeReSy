@@ -32,6 +32,7 @@ set(src_files
     lib/schedule_exporter/schedule_exporter.cpp
     lib/data_gateway/data_gateway.cpp
     lib/LoginUI.cpp
+    lib/elective_picker.cpp
 )
 target_sources(main PRIVATE ${src_files})
 
@@ -43,7 +44,9 @@ add_external_libraries(main)
 enable_testing()
 
 set(tests
+    conflct_detection
     schedule_credit_hours
+    elective_picker
     png
     schedule_exporter
     data_gateway

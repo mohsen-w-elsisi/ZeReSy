@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <sqlite3.h>
-#include <course.h>
-#include <student.h>
+#include "course.h"
+#include "student.h"
 #include "admin.h"
 #include "utils.cpp"
 using namespace std;
@@ -17,8 +17,6 @@ string tableExistanceQuery(string tableName) {
         + tableName + "'";
 }
 
-
-//  ================ Course ==========================
 
 namespace courseQueries {
     const string tableCreation =
@@ -42,13 +40,35 @@ namespace courseQueries {
             " WHERE id='" + courseId + "';";
     }
 
+    string encodeAvailableTimes(vector<CourseTime> times) {
+        string buffer;
+        for (const auto& time : times) {
+            string dayInidacter = to_string(time.day);
+            string timeIndicaor = time.startTime >= 10
+                ? to_string(time.startTime)
+                : "0" + to_string(time.startTime);
+            buffer += dayInidacter + timeIndicaor + ",";
+        }
+        return buffer;
+    }
+
+    vector<CourseTime> decodeAvailableTimes(string encodedTimes) {
+        vector<CourseTime> times;
+        for (int i = 0; i < encodedTimes.size() / 4; i += 4) {
+            Day day = (Day)stoi(encodedTimes.substr(i, 1));
+            int time = stoi(encodedTimes.substr(i + 1, 2));
+            times.push_back({ day, time });
+        }
+        return times;
+    }
+
     string set(const Course& course) {
         return "INSERT OR REPLACE INTO courses VALUES ("
             "'" + course.getId() + "',"
             "'" + course.getName() + "'," +
             to_string(course.getCreditHours()) + ","
             "'" + course.getInstructorName() + "',"
-            "''," +
+            "'" + encodeAvailableTimes(course.getAvailableTimes()) + "'," +
             to_string(course.getDuration()) + "," +
             (course.getIsElective() ? "TRUE" : "FALSE") +
             ");";
@@ -64,17 +84,14 @@ namespace courseQueries {
             readTextCol(stmt, 1),
             sqlite3_column_int(stmt, 2),
             readTextCol(stmt, 3),
-            {}, // TODO: available times
+            decodeAvailableTimes(readTextCol(stmt, 4)),
             sqlite3_column_int(stmt, 5),
             sqlite3_column_int(stmt, 6) == 1
         );
     }
+
 } // namespace courseQueries
 
-
-
-
-//  ================ Student ==========================
 
 namespace studentQueries {
     const string tableCreation =

@@ -53,3 +53,12 @@ CourseWithSelectedTime::CourseWithSelectedTime(Course course, CourseTime time) :
 
 CourseTime CourseWithSelectedTime::getSelectedTime() const { return selectedTime; }
 
+bool CourseWithSelectedTime::conflictsWith(const CourseWithSelectedTime& other) const {
+    if (selectedTime.day == other.selectedTime.day) {
+        int startTimeDifference = selectedTime.startTime - other.selectedTime.startTime;
+        const Course& precedingCourse = startTimeDifference > 0 ? other : *this;
+        if (abs(startTimeDifference) < precedingCourse.getDuration() / 60.0) return true;
+    }
+    return false;
+}
+
