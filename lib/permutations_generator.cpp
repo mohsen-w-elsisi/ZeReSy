@@ -23,26 +23,20 @@ vector<vector<int>> PermutationsGenerator::permutationManager(const vector <Cour
             if (perm[i] != permutation[i]) {
                 maxIndex = i;
             } else if (perm[i] == permutation[i]) {
-                bool check = false;
                 trigger = true;
                 
                 for (int j = (maxIndex + 1); j < perm.size(); j++) {
-                    if (perm[j] != permutation[j]) {
-                        check = true; 
+                    if (perm[j] != permutation[j]) { 
                         maxIndex = j;
                     }
                 }
                 
-                if (check == false) {
-                    fill(perm.begin() + (maxIndex + 1), perm.end(), 0);
-                    perm[maxIndex] += 1; 
-                    break;
-                } else {
-                    perm[maxIndex] += 1; 
-                    break;
-                }
+                fill(perm.begin() + (maxIndex + 1), perm.end(), 0);
+                perm[maxIndex] += 1; 
+                break;
             }
             
+           
             if (trigger == false && i == perm.size()-1) {
                 perm[maxIndex] += 1;
             }
@@ -51,14 +45,7 @@ vector<vector<int>> PermutationsGenerator::permutationManager(const vector <Cour
     permutations.push_back(permutation);
     return permutations;
 }
-void PermutationsGenerator::permutationRecursive(int num, const vector <int> &perms, vector <int> &permu, vector <vector<int>> &final_permutations){
-    if (num == perms.size()){final_permutations.push_back(permu); return;}
-    for (int i = 0; i < perms[num]; i++){ 
-        permu.push_back(i);
-        permutationRecursive (num+1, perms, permu, final_permutations);
-        permu.pop_back();
-    }
-}
+
 vector <vector<int>> PermutationsGenerator::conflictResolver(const vector <Course>& courses){
     vector <vector<int>> noConflictPermutations = permutationManager(courses);
     for(size_t i = 0; i < noConflictPermutations.size(); i++){
